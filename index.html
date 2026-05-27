@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Hasil TKA SDN Cenggini 02</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f3f6fb;
+      color:#222;
+    }
+
+    .header{
+      background:linear-gradient(135deg,#0d47a1,#1976d2);
+      color:white;
+      padding:30px 20px;
+      text-align:center;
+    }
+
+    .header h1{
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    .header p{
+      font-size:16px;
+      opacity:0.95;
+    }
+
+    .container{
+      width:90%;
+      max-width:800px;
+      margin:40px auto;
+      background:white;
+      border-radius:15px;
+      padding:35px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .login-box{
+      text-align:center;
+    }
+
+    .login-box h2{
+      margin-bottom:20px;
+      color:#0d47a1;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border:1px solid #ccc;
+      border-radius:10px;
+      margin-bottom:20px;
+      font-size:16px;
+    }
+
+    button{
+      background:#1976d2;
+      color:white;
+      border:none;
+      padding:14px 30px;
+      border-radius:10px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#0d47a1;
+    }
+
+    .result{
+      display:none;
+      margin-top:30px;
+    }
+
+    .card{
+      background:#f8fbff;
+      border-left:6px solid #1976d2;
+      padding:25px;
+      border-radius:10px;
+    }
+
+    .card h3{
+      margin-bottom:20px;
+      color:#0d47a1;
+    }
+
+    .data{
+      margin-bottom:12px;
+      font-size:16px;
+    }
+
+    .nilai{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .nilai-box{
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      text-align:center;
+      box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .nilai-box h4{
+      margin-bottom:10px;
+      color:#1976d2;
+    }
+
+    .score{
+      font-size:30px;
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+
+    .status{
+      font-size:14px;
+      color:#666;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:30px;
+      color:#666;
+      font-size:14px;
+    }
+
+    .error{
+      color:red;
+      margin-top:10px;
+      font-weight:bold;
+    }
+
+    @media(max-width:600px){
+      .nilai{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Pengumuman Hasil TKA</h1>
+    <p>SD Negeri Cenggini 02 Tahun 2026</p>
+  </div>
+
+  <div class="container">
+
+    <div class="login-box">
+      <h2>Login Menggunakan NISN</h2>
+
+      <input type="text" id="nisn" placeholder="Masukkan NISN">
+      <button onclick="cekHasil()">Lihat Hasil</button>
+
+      <div class="error" id="error"></div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="card">
+        <h3>Data Hasil TKA</h3>
+
+        <div class="data"><b>Nama:</b> <span id="nama"></span></div>
+        <div class="data"><b>NISN:</b> <span id="hasilNisn"></span></div>
+        <div class="data"><b>Nomor Peserta:</b> <span id="peserta"></span></div>
+        <div class="data"><b>Tempat, Tanggal Lahir:</b> <span id="ttl"></span></div>
+
+        <div class="nilai">
+          <div class="nilai-box">
+            <h4>Matematika</h4>
+            <div class="score" id="mtk"></div>
+            <div class="status" id="mtkKet"></div>
+          </div>
+
+          <div class="nilai-box">
+            <h4>Bahasa Indonesia</h4>
+            <div class="score" id="indo"></div>
+            <div class="status" id="indoKet"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      © 2026 SD Negeri Cenggini 02
+    </div>
+
+  </div>
+
+  <script>
+
+    const dataSiswa = [
+      {
+        nisn:"3146525710",
+        nama:"MUHAMAD ROIHAN MAULIDA",
+        peserta:"T1-26-03-35-0073-0001-8",
+        ttl:"Tegal, 7 Januari 2014",
+        mtk:"40.00",
+        mtkKet:"Memadai",
+        indo:"73.33",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"0146637439",
+        nama:"M. KHAFID ALIFAUZI",
+        peserta:"T1-26-03-35-0073-0002-7",
+        ttl:"Tegal, 20 Juli 2014",
+        mtk:"53.33",
+        mtkKet:"Memadai",
+        indo:"70.00",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"3142939858",
+        nama:"HANIA SYAKIRA",
+        peserta:"T1-26-03-35-0073-0003-6",
+        ttl:"Tegal, 26 April 2014",
+        mtk:"26.67",
+        mtkKet:"Kurang",
+        indo:"70.00",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"0131884294",
+        nama:"DAFI NABIL MUSYAFA",
+        peserta:"T1-26-03-35-0073-0004-5",
+        ttl:"Tegal, 28 Juli 2013",
+        mtk:"46.67",
+        mtkKet:"Memadai",
+        indo:"53.33",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"3133944890",
+        nama:"SITI MUJILAH",
+        peserta:"T1-26-03-35-0073-0005-4",
+        ttl:"Tegal, 14 September 2013",
+        mtk:"50.00",
+        mtkKet:"Memadai",
+        indo:"50.00",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"3136618392",
+        nama:"M. NUR FIKRI SAPUTRA",
+        peserta:"T1-26-03-35-0073-0006-3",
+        ttl:"Tegal, 18 Oktober 2013",
+        mtk:"56.67",
+        mtkKet:"Baik",
+        indo:"70.00",
+        indoKet:"Memadai"
+      },
+      {
+        nisn:"3132924635",
+        nama:"DEVI NURJANAH",
+        peserta:"T1-26-03-35-0073-0007-2",
+        ttl:"Tegal, 29 Agustus 2013",
+        mtk:"63.33",
+        mtkKet:"Baik",
+        indo:"80.00",
+        indoKet:"Baik"
+      },
+      {
+        nisn:"3140856607",
+        nama:"IFFA ASTILA LABIBAH",
+        peserta:"T1-26-03-35-0073-0008-9",
+        ttl:"Tegal, 23 Mei 2014",
+        mtk:"50.00",
+        mtkKet:"Memadai",
+        indo:"80.00",
+        indoKet:"Baik"
+      }
+    ];
+
+    function cekHasil(){
+
+      const nisn = document.getElementById("nisn").value;
+      const siswa = dataSiswa.find(s => s.nisn === nisn);
+
+      if(siswa){
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("error").innerHTML = "";
+
+        document.getElementById("nama").innerHTML = siswa.nama;
+        document.getElementById("hasilNisn").innerHTML = siswa.nisn;
+        document.getElementById("peserta").innerHTML = siswa.peserta;
+        document.getElementById("ttl").innerHTML = siswa.ttl;
+
+        document.getElementById("mtk").innerHTML = siswa.mtk;
+        document.getElementById("mtkKet").innerHTML = siswa.mtkKet;
+
+        document.getElementById("indo").innerHTML = siswa.indo;
+        document.getElementById("indoKet").innerHTML = siswa.indoKet;
+
+      } else {
+
+        document.getElementById("result").style.display = "none";
+        document.getElementById("error").innerHTML = "NISN tidak ditemukan!";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
